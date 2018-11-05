@@ -98,11 +98,22 @@ function randomUbi(array1) {
     
     
         if (tauler[y][x] === 0) {
-            array1[0] = y;
-            array1[1] = x;
+            array1["y"] = y;
+            array1["x"] = x;
             i = true;
             tauler[y][x] = array1["tipo"];
         }
         
     }
 }
+/*
+function posiValidas () {
+    
+    for (var i = 0; i < 4; i++) {
+        
+        if (tauler[][])
+        
+    }
+    
+}
+*/
