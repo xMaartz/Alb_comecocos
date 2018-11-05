@@ -1,5 +1,5 @@
 
-// Declaracion del tablero
+// Declaración Tablero
 var tauler = new Array (30);
 
 for (i = 0; i < tauler.length; i++) {
@@ -54,39 +54,41 @@ tauler[29] = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
     }
 }*/
 
+// Declaración Fantasmas y Jugador
+
 var fantasma1 = new Array();
 fantasma1["y"] = 0;
 fantasma1["x"] = 0;
 fantasma1["tipo"] = "f";
-fantasma1["dire"] = 0;
+fantasma1["dire"] = "";
 
 var fantasma2 = new Array();
 fantasma2["y"] = 0;
 fantasma2["x"] = 0;
 fantasma2["tipo"] = "f";
-fantasma2["dire"] = 0;
+fantasma2["dire"] = "";
 
 var fantasma3 = new Array();
 fantasma3["y"] = 0;
 fantasma3["x"] = 0;
 fantasma3["tipo"] = "f";
-fantasma3["dire"] = 0;
+fantasma3["dire"] = "";
 
 var jugador = new Array();
 jugador["y"] = 0;
 jugador["x"] = 0;
 jugador["tipo"] = "j";
-jugador["dire"] = 0;
-jugador["dire2"] = 0;
+jugador["dire"] = "";
+jugador["dire2"] = "";
 
 
+// Asignación posiciones random
 
 randomUbi(fantasma1);
 randomUbi(fantasma2);
 randomUbi(fantasma3);
 randomUbi(jugador);
 
-        
         
 function randomUbi(array1) {
     
@@ -106,14 +108,42 @@ function randomUbi(array1) {
         
     }
 }
-/*
-function posiValidas () {
+
+// Asignación dirección
+
+posiValidas(fantasma1);
+
+function posiValidas (array1) {
     
-    for (var i = 0; i < 4; i++) {
+    var y = array1["y"];
+    var x = array1["x"];
+    var posiciones = Array();
+    var i = 0;
         
-        if (tauler[][])
+        if (tauler[y][x+1] === 0) {
+            posiciones[i] = "Derecha";
+            i++;
+        }
         
-    }
+        if (tauler[y+1][x] === 0) {
+            posiciones[i] = "Abajo";
+            i++;
+        }
+        
+        if (tauler[y][x-1] === 0) {
+            posiciones[i] = "Izquierda";
+            i++;
+        }
+        
+        if (tauler[y-1][x] === 0) {
+            posiciones[i] = "Arriba";
+            i++;
+        }
+        
+    var resu = Math.floor(Math.random() * posiciones.lenght-1);
+    
+    array1["dire"] = posiciones[resu];
     
 }
-*/
+
+
