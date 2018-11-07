@@ -112,6 +112,9 @@ function randomUbi(array1) {
 // Asignación dirección
 
 posiValidas(fantasma1);
+posiValidas(fantasma2);
+posiValidas(fantasma3);
+posiValidas(jugador);
 
 function posiValidas (array1) {
     
@@ -140,7 +143,7 @@ function posiValidas (array1) {
             i++;
         }
         
-    var resu = Math.floor(Math.random() * posiciones.lenght-1);
+    var resu = Math.floor(Math.random() * posiciones.length);
     
     array1["dire"] = posiciones[resu];
     
