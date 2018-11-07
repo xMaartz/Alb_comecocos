@@ -59,7 +59,7 @@ tauler[29] = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 var fantasma1 = new Array();
 fantasma1["y"] = 0;
 fantasma1["x"] = 0;
-fantasma1["tipo"] = "f";
+fantasma1["tipo"] = "o";
 fantasma1["dire"] = "";
 
 var fantasma2 = new Array();
@@ -111,10 +111,10 @@ function randomUbi(array1) {
 
 // Asignación dirección
 
-posiValidas(fantasma1);
-posiValidas(fantasma2);
-posiValidas(fantasma3);
-posiValidas(jugador);
+asignaDire(fantasma1);
+asignaDire(fantasma2);
+asignaDire(fantasma3);
+asignaDire(jugador);
 
 function posiValidas (array1) {
     
@@ -143,10 +143,72 @@ function posiValidas (array1) {
             i++;
         }
         
+        return posiciones;
+    
+}
+
+function asignaDire (array1) {
+    
+    var posiciones = posiValidas(array1);
+    
     var resu = Math.floor(Math.random() * posiciones.length);
     
     array1["dire"] = posiciones[resu];
     
 }
 
+// movimiento
 
+function movimiento (array1) {
+    
+    var y = array1["y"];
+    var x = array1["x"];
+    var muro = false;
+    
+    // fase de movimiento
+    
+    if (array1["dire"] === "Derecha") {
+        array1["x"]++;
+        var direActual = "Derecha";
+        if (tauler[y][x+1] === 1) {
+            muro = true;
+        }
+    }
+    
+    if (array1["dire"] === "Abajo") {
+        array1["y"]++;
+        var direActual = "Abajo";
+        if (tauler[y+1][x] === 1) {
+            muro = true;
+        }
+    }
+    
+    if (array1["dire"] === "Izquierda") {
+        array1["x"]--;
+        var direActual = "Izquierda";
+        if (tauler[y][x-1] === 1) {
+            muro = true;
+        }
+    }
+    
+    if (array1["dire"] === "Arriba") {
+        array1["y"]--;
+        var direActual = "Arriba";
+        if (tauler[y-1][x] === 1) {
+            muro = true;
+        }
+    }
+    
+    // fase de asignación nueva dirección
+    
+    var posiciones = posiValidas(array1);
+    
+    if (posiciones.length >= 3) {
+        asignaDire(array1);
+    } else if (posiciones.length === 2 && muro === true) {
+        asignaDire(array1);
+    } else {
+        array1["Dire"] = direActual;
+    }
+    
+}
