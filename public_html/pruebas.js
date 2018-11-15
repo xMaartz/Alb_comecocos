@@ -93,13 +93,6 @@ randomUbi(fantasma2);
 randomUbi(fantasma3);
 randomUbi(jugador);
 
-// Asignación direcciones random
-
-asignaDire(fantasma1);
-asignaDire(fantasma2);
-asignaDire(fantasma3);
-asignaDire(jugador);
-
         
 function randomUbi(array1) {
     
@@ -119,9 +112,19 @@ function randomUbi(array1) {
     }
 }
 
+function imprimir (array1) {
+    
+    var y = array1["y"];
+    var x = array1["x"];
+    
+    tauler[y][x] = array1["tipo"];
+    
+}
+
+// Asignación dirección
 
 
-function asignaDire (array1) {
+function posiValidas (array1) {
     
     var y = array1["y"];
     var x = array1["x"];
@@ -148,54 +151,17 @@ function asignaDire (array1) {
             i++;
         }
         
-        var resu = Math.floor(Math.random() * posiciones.length);
-    
-        array1["dire"] = posiciones[resu];
-    
-}
-
-
-function posiValidas (array1) {
-    
-    var y = array1["y"];
-    var x = array1["x"];
-    var posiciones = Array();
-    posiciones["R"] = 0;
-    posiciones["D"] = 0;
-    posiciones["L"] = 0;
-    posiciones["U"] = 0;
-    posiciones["leng"] = 0;
-        
-        if ((array1["x"]<29) && tauler[y][x+1] === 0) {
-            posiciones["D"] = 1;
-            posiciones["leng"]++;
-        }
-        
-        if ((array1["y"]<29) && tauler[y+1][x] === 0) {
-            posiciones["D"] = 1;
-            posiciones["leng"]++;
-        }
-        
-        if ((array1["x"]>0) && tauler[y][x-1] === 0) {
-            posiciones["L"] = 1;
-            posiciones["leng"]++;
-        }
-        
-        if ((array1["y"]>0) && tauler[y-1][x] === 0) {
-            posiciones["U"] = 1;
-            posiciones["leng"]++;
-        }
-        
         return posiciones;
+    
 }
-// imprimir muñecos
 
-function imprimir (array1) {
+function asignaDire (array1) {
     
-    var y = array1["y"];
-    var x = array1["x"];
+    var posiciones = posiValidas(array1);
     
-    tauler[y][x] = array1["tipo"];
+    var resu = Math.floor(Math.random() * posiciones.length);
+    
+    array1["dire"] = posiciones[resu];
     
 }
 
@@ -210,38 +176,45 @@ function movimiento (array1) {
     
     // fase de movimiento
     
-    if ((array1["x"]<29) && (array1["dire"] === "Derecha")) {
+    if (array1["dire"] === "Derecha") {
         array1["x"]++;
         direActual = "Derecha";
+        if (x >=0 && x <=29 && tauler[y][x+1] === 1) {
+            muro = true;
+        }
     }
     
-    if ((array1["y"]<29) && (array1["dire"] === "Abajo")) {
+    if (array1["dire"] === "Abajo") {
         array1["y"]++;
         direActual = "Abajo";
+        if (y+1 >=0 && y+1 <=29 && tauler[y+1][x] === 1) {
+            muro = true;
+        }
     }
     
-    if ((array1["x"]>0) && (array1["dire"] === "Izquierda")) {
+    if (array1["dire"] === "Izquierda") {
         array1["x"]--;
         direActual = "Izquierda";
+        if (x-1 >=0 && x-1 <=29 && tauler[y][x-1] === 1) {
+            muro = true;
+        }
     }
     
-    if ((array1["y"]>0) && (array1["dire"] === "Arriba")) {
+    if (array1["dire"] === "Arriba") {
         array1["y"]--;
         direActual = "Arriba";
+        if (y-1 >=0 && y-1 <=29 && tauler[y-1][x] === 1) {
+            muro = true;
+        }
     }
     
     // fase de asignación nueva dirección
     
     var posiciones = posiValidas(array1);
     
-    if (direActual === "Derecha" && posiciones["R"] === 0) muro = true;
-    if (direActual === "Abajo" && posiciones["D"] === 0) muro = true;
-    if (direActual === "Izquierda" && posiciones["L"] === 0) muro = true;
-    if (direActual === "Arriba" && posiciones["U"] === 0) muro = true;
-    
-    if (posiciones["Leng"] >= 3) {
+    if (posiciones.length >= 3) {
         asignaDire(array1);
-    } else if (posiciones["Leng"] === 2 && muro === true) {
+    } else if (posiciones.length === 2 && muro === true) {
         asignaDire(array1);
     } else {
         array1["dire"] = direActual;
@@ -250,7 +223,7 @@ function movimiento (array1) {
 }
 
 function activar () {
-    inter = setInterval(imprimirTablero, 1000);
+    imprimirTablero();
 }
 
 function imprimirTablero () {

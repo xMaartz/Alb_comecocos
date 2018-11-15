@@ -11,25 +11,13 @@ and open the template in the editor.
         <script type="text/javascript" src="main.js"></script>
     </head>
     <body>
-        <script type="text/javascript">
+        <div>
+            <button onclick="activar()">START</button>
+
+            <hr/>
+
+            <p style="font-family: Courier" id="tabla" ></p>
             
-            for (i = 0; i < tauler.length; i++) {
-                
-                document.write("<br />");
-                
-                for (j = 0; j < tauler[i].length; j++) {
-                    
-                    document.write(tauler[i][j]+" ");
-                    
-                }
-            }
-            document.write("<br />");
-            document.write("<br />");
-            document.write(fantasma1["dire"]);
-            document.write("<br />");
-            document.write(fantasma1["y"]);
-            document.write("<br />");
-            document.write(fantasma1["x"]);
-        </script>
+        </div>
     </body>
 </html>
